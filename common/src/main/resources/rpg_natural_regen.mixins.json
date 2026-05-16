@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.rinchan.rpgnaturalregen.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "FoodDataMixin",
+    "PlayerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

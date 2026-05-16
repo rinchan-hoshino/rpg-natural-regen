@@ -6,10 +6,10 @@ RPG Natural Regen replaces hunger-driven vanilla healing with configurable slow 
 
 ## Default behavior
 
-- Disables vanilla `naturalRegeneration` when the server starts.
+- Suppresses vanilla hunger-based natural regeneration while the mod is installed.
+- Does not change the world's `naturalRegeneration` gamerule.
 - Heals players for 1 health every 100 ticks while in combat.
 - Doubles the heal amount outside combat by default.
-- Keeps the West Melon Field apple first-aid rule: a normal apple restores 4 extra health.
 - Uses Combat State to decide whether a player is in combat.
 
 ## Configuration
@@ -24,15 +24,11 @@ Default values:
 
 ```toml
 [regeneration]
-disableVanillaNaturalRegeneration = true
+suppressVanillaNaturalRegeneration = true
 enableSlowRegeneration = true
 healIntervalTicks = 100
 healAmount = 1.0
 outOfCombatMultiplier = 2.0
-
-[first_aid]
-enableAppleFirstAid = true
-appleHealAmount = 4.0
 ```
 
 ## Requirements

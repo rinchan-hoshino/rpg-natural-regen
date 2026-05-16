@@ -1,10 +1,7 @@
 package dev.rinchan.rpgnaturalregen;
 
 import dev.rinchan.combatstate.CombatStateApi;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
 
 public final class RpgNaturalRegen {
@@ -13,10 +10,11 @@ public final class RpgNaturalRegen {
     private RpgNaturalRegen() {
     }
 
-    public static void enforceNaturalRegeneration(MinecraftServer server) {
-        if (RpgNaturalRegenConfig.disableVanillaNaturalRegeneration.get()) {
-            server.getGameRules().getRule(GameRules.RULE_NATURAL_REGENERATION).set(false, server);
+    public static boolean suppressVanillaNaturalRegeneration(GameRules rules, GameRules.Key<GameRules.BooleanValue> key) {
+        if (key == GameRules.RULE_NATURAL_REGENERATION && RpgNaturalRegenConfig.suppressVanillaNaturalRegeneration.get()) {
+            return false;
         }
+        return rules.getBoolean(key);
     }
 
     public static void tickPlayer(ServerPlayer player) {
@@ -35,13 +33,6 @@ public final class RpgNaturalRegen {
             amount *= RpgNaturalRegenConfig.outOfCombatMultiplier.get().floatValue();
         }
         heal(player, amount);
-    }
-
-    public static void finishUsingItem(ServerPlayer player, ItemStack usedStack) {
-        if (!RpgNaturalRegenConfig.enableAppleFirstAid.get() || !usedStack.is(Items.APPLE)) {
-            return;
-        }
-        heal(player, RpgNaturalRegenConfig.appleHealAmount.get().floatValue());
     }
 
     private static void heal(ServerPlayer player, float amount) {
