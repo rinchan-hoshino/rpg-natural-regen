@@ -11,6 +11,7 @@ RPG Natural Regen replaces hunger-driven vanilla healing with configurable slow 
 - Heals players for 1 health every 100 ticks while in combat.
 - Doubles the heal amount outside combat by default.
 - Uses Combat State to decide whether a player is in combat.
+- Can optionally restore extra health immediately after configured foods are eaten. The default list is empty.
 
 ## Configuration
 
@@ -29,7 +30,19 @@ enableSlowRegeneration = true
 healIntervalTicks = 100
 healAmount = 1.0
 outOfCombatMultiplier = 2.0
+
+[instant_food_healing]
+foods = []
 ```
+
+Food-healing entries use `item_id=health`, for example:
+
+```toml
+[instant_food_healing]
+foods = ["minecraft:apple=4.0"]
+```
+
+`4.0` health is two hearts.
 
 ## Requirements
 

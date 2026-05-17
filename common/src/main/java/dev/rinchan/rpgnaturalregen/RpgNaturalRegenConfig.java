@@ -1,5 +1,6 @@
 package dev.rinchan.rpgnaturalregen;
 
+import java.util.List;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 public final class RpgNaturalRegenConfig {
@@ -10,6 +11,7 @@ public final class RpgNaturalRegenConfig {
     public static final ModConfigSpec.IntValue healIntervalTicks;
     public static final ModConfigSpec.DoubleValue healAmount;
     public static final ModConfigSpec.DoubleValue outOfCombatMultiplier;
+    public static final ModConfigSpec.ConfigValue<List<? extends String>> instantFoodHealing;
 
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
@@ -30,6 +32,16 @@ public final class RpgNaturalRegenConfig {
         outOfCombatMultiplier = builder
             .comment("Multiplier for slow regeneration when the player is not in combat.")
             .defineInRange("outOfCombatMultiplier", 2.0D, 0D, 1024D);
+        builder.pop();
+
+        builder.push("instant_food_healing");
+        instantFoodHealing = builder
+            .comment(
+                "Extra health restored immediately after a player finishes eating a listed item.",
+                "Entries use item id and health amount: \"minecraft:apple=4.0\".",
+                "Default is empty. 1.0 health = half a heart."
+            )
+            .defineListAllowEmpty("foods", List.of(), value -> value instanceof String);
         builder.pop();
 
         SPEC = builder.build();
